@@ -62,6 +62,7 @@ class TodoApp extends HTMLElement {
       $todoItem.setAttribute('index', index);
 
       $todoItem.addEventListener('onRemove', this._removeTodo.bind(this));
+      $todoItem.addEventListener('onToggle', this._toggleTodo.bind(this));
 
       this.$todoList.appendChild($todoItem);
     });
@@ -78,6 +79,14 @@ class TodoApp extends HTMLElement {
 
   _removeTodo(e) {
     this._todos.splice(e.detail, 1);
+    this._renderTodoList();
+  }
+
+  _toggleTodo(e) {
+    const todo = this._todos[e.detail];
+    this._todos[e.detail] = Object.assign({}, todo, {
+      checked: !todo.checked,
+    });
     this._renderTodoList();
   }
 }
