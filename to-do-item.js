@@ -66,7 +66,7 @@ class TodoItem extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['text', 'checked'];
+    return ['text', 'checked', 'index'];
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
@@ -76,6 +76,9 @@ class TodoItem extends HTMLElement {
         break;
       case 'checked':
         this._checked = this.hasAttribute('checked');
+        break;
+      case 'index':
+        this._index = parseInt(newValue);
         break;
     }
   }
@@ -90,6 +93,14 @@ class TodoItem extends HTMLElement {
     } else {
       this.removeAttribute('checked');
     }
+  }
+
+  set index(val) {
+    this.setAttribute('index', val);
+  }
+
+  get index() {
+    return this._index;
   }
 }
 window.customElements.define('to-do-item', TodoItem);
