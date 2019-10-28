@@ -1,4 +1,4 @@
-const template = document.createElement("template");
+const template = document.createElement('template');
 template.innerHTML = `
 <style>
     :host {
@@ -28,29 +28,36 @@ template.innerHTML = `
 class TodoApp extends HTMLElement {
   constructor() {
     super();
-    this._shadowRoot = this.attachShadow({ mode: "open" });
+    this._shadowRoot = this.attachShadow({ mode: 'open' });
     this._shadowRoot.appendChild(template.content.cloneNode(true));
-    this.$todoList = this._shadowRoot.querySelector("ul");
+
+    this.todoList = this._shadowRoot.querySelector('ul');
+    // this.input = this._shadowRoot.querySelector('ul');
   }
 
   _renderTodoList() {
-      this.$todoList.innerHTML = '';
+    this.todoList.innerHTML = '';
 
-      this._todos.forEach((todo, index) => {
-          let $todoItem = document.createElement('div');
-          $todoItem.innerHTML = todo.text;
-          this.$todoList.appendChild($todoItem);
-      });
+    this._todos.forEach((todo, index) => {
+      let todoItem = document.createElement('div');
+      todoItem.innerHTML = todo.text;
+      this.todoList.appendChild(todoItem);
+    });
   }
 
   set todos(value) {
-      this._todos = value;
-      this._renderTodoList();
+    this._todos = value;
+    this._renderTodoList();
   }
 
   get todos() {
-      return this._todos;
+    return this._todos;
   }
 }
 
-window.customElements.define("to-do-app", TodoApp);
+window.customElements.define('to-do-app', TodoApp);
+
+document.querySelector('to-do-app').todos = [
+  { text: 'Make a to-do list', checked: false },
+  { text: 'Finish blog post', checked: false },
+];
