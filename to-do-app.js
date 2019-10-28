@@ -32,7 +32,18 @@ class TodoApp extends HTMLElement {
     this._shadowRoot.appendChild(template.content.cloneNode(true));
 
     this.todoList = this._shadowRoot.querySelector('ul');
-    // this.input = this._shadowRoot.querySelector('ul');
+    this.input = this._shadowRoot.querySelector('input');
+
+    this.submitButton = this._shadowRoot.querySelector('button');
+    this.submitButton.addEventListener('click', this._addTodo.bind(this));
+  }
+
+  _addTodo() {
+    if (this.input.value.length > 0) {
+      this._todos.push({ text: this.input.value, checked: false });
+      this._renderTodoList();
+      this.input.value = '';
+    }
   }
 
   _renderTodoList() {
