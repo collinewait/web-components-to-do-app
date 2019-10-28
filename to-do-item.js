@@ -53,6 +53,7 @@ class TodoItem extends HTMLElement {
   }
 
   _renderTodoItem() {
+    console.log('Checking checked...', this.hasAttribute('checked'));
     if (this.hasAttribute('checked')) {
       this.$item.classList.add('completed');
       this.$checkbox.setAttribute('checked', '');
@@ -65,11 +66,18 @@ class TodoItem extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['text'];
+    return ['text', 'checked'];
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
-    this._text = newValue;
+    switch (name) {
+      case 'text':
+        this._text = newValue;
+        break;
+      case 'checked':
+        this._checked = this.hasAttribute('checked');
+        break;
+    }
   }
 }
 window.customElements.define('to-do-item', TodoItem);

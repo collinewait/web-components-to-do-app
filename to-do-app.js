@@ -54,6 +54,11 @@ class TodoApp extends HTMLElement {
     this._todos.forEach((todo, index) => {
       let $todoItem = document.createElement('to-do-item');
       $todoItem.setAttribute('text', todo.text);
+
+      // if our to-do is checked, set the attribute, else; omit it.
+      if (todo.checked) {
+        $todoItem.setAttribute('checked', '');
+      }
       this.$todoList.appendChild($todoItem);
     });
   }
@@ -71,6 +76,6 @@ class TodoApp extends HTMLElement {
 window.customElements.define('to-do-app', TodoApp);
 
 document.querySelector('to-do-app').todos = [
-  { text: 'Make a to-do list', checked: false },
+  { text: 'Make a to-do list', checked: true },
   { text: 'Finish blog post', checked: false },
 ];
